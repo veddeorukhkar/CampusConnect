@@ -431,10 +431,12 @@ function renderAdminEventsTable(list) {
       <td data-label="Date">${e.date}</td>
       <td data-label="Time">${e.time}</td>
       <td data-label="Location">${escapeHtml(e.location)}</td>
-           <td data-label="Actions">
-        <button class="btn btn-secondary btn-sm js-view-registrations" data-id="${e._id}" data-title="${escapeHtml(e.title)}">Registrations</button>
-        <button class="btn btn-secondary btn-sm js-edit-event" data-id="${e._id}">Edit</button>
-        <button class="btn btn-danger btn-sm js-delete-event" data-id="${e._id}">Delete</button>
+                 <td data-label="Actions">
+        <div style="display:flex; flex-wrap:wrap; gap:6px;">
+          <button class="btn btn-secondary btn-sm js-view-registrations" data-id="${e._id}" data-title="${escapeHtml(e.title)}">View</button>
+          <button class="btn btn-secondary btn-sm js-edit-event" data-id="${e._id}">Edit</button>
+          <button class="btn btn-danger btn-sm js-delete-event" data-id="${e._id}">Delete</button>
+        </div>
       </td>
     </tr>`).join("");
 

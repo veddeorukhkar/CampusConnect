@@ -80,6 +80,19 @@
 <script src="js/auth.js"></script>
 <script src="js/events.js"></script>
 <script>requireAuth();</script>
-<style>@media(max-width:960px){#events-grid{grid-template-columns:repeat(2,1fr) !important;}} @media(max-width:640px){#events-grid{grid-template-columns:1fr !important;}}</style>
+<style>
+@media(max-width:960px){#events-grid{grid-template-columns:repeat(2,1fr) !important;}}
+@media(max-width:640px){
+  #events-grid{grid-template-columns:1fr !important;}
+  #registered-events-grid{
+    display:flex !important;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    gap:14px;
+    padding-bottom:8px;
+  }
+  #registered-events-grid > div { min-width:220px; flex-shrink:0; }
+}
+</style>
 </body>
 </html>
