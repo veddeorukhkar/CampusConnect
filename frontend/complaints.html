@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Complaints — CampusConnect</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/dashboard.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand"><i class="fa-solid fa-graduation-cap"></i> CampusConnect</div>
+    <div class="user-chip">
+      <div class="avatar js-user-initials">?</div>
+      <div><div class="name js-user-name">Loading...</div><div class="role js-user-role">student</div></div>
+    </div>
+    <nav class="side-nav">
+      <a href="student-dashboard.html"><i class="fa-solid fa-chart-simple"></i> Dashboard</a>
+      <a href="complaints.html" class="active"><i class="fa-solid fa-comment-dots"></i> Complaints</a>
+      <a href="requests.html"><i class="fa-solid fa-file-circle-check"></i> Service Requests</a>
+      <a href="notices.html"><i class="fa-solid fa-bullhorn"></i> Notices</a>
+      <a href="events.html"><i class="fa-solid fa-calendar-days"></i> Events</a>
+      <a href="profile.html"><i class="fa-solid fa-user"></i> Profile</a>
+    </nav>
+    <div class="sidebar-footer"><a href="#" class="js-logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Log Out</a></div>
+  </aside>
+
+  <main class="main-content">
+    <div class="topbar">
+      <div class="flex gap-12" style="align-items:center;">
+        <button class="hamburger icon-btn" id="hamburger-btn"><i class="fa-solid fa-bars"></i></button>
+        <h1>Complaints</h1>
+      </div>
+      <div class="topbar-actions">
+        <button class="icon-btn" onclick="toggleTheme()"><i id="theme-icon" class="fa-solid fa-moon"></i></button>
+        <button class="btn btn-primary btn-sm" id="open-complaint-modal"><i class="fa-solid fa-plus"></i> New Complaint</button>
+      </div>
+    </div>
+
+    <div class="page-body">
+      <div class="card" style="padding:20px; margin-bottom:24px;">
+        <div class="toolbar">
+          <div class="search-box"><i class="fa-solid fa-magnifying-glass"></i><input type="text" id="search-input" placeholder="Search complaints by subject..."></div>
+          <select class="filter-select" id="status-filter">
+            <option value="">All Statuses</option>
+            <option>Pending</option><option>In Progress</option><option>Resolved</option><option>Rejected</option>
+          </select>
+          <select class="filter-select" id="category-filter">
+            <option value="">All Categories</option>
+            <option>Hostel</option><option>Academics</option><option>Infrastructure</option><option>IT Services</option><option>Library</option><option>Cafeteria</option>
+          </select>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>Subject</th><th>Category</th><th>Priority</th><th>Status</th><th>Date</th></tr></thead>
+            <tbody id="complaints-tbody"><tr><td colspan="5"><div class="spinner"></div></td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- New Complaint Modal -->
+<div class="modal-overlay" id="complaint-modal">
+  <div class="modal-box" style="max-width:520px;">
+    <div class="modal-header">
+      <h3>Submit a Complaint</h3>
+      <span class="modal-close" id="close-complaint-modal"><i class="fa-solid fa-xmark"></i></span>
+    </div>
+    <form id="complaint-form">
+      <div class="form-group">
+        <label class="form-label">Category</label>
+        <select class="form-control" id="complaint-category" required>
+          <option value="">Select category</option>
+          <option>Hostel</option><option>Academics</option><option>Infrastructure</option><option>IT Services</option><option>Library</option><option>Cafeteria</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Subject</label>
+        <input type="text" class="form-control" id="complaint-subject" placeholder="Brief summary of the issue" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Description</label>
+        <textarea class="form-control" id="complaint-description" placeholder="Describe the issue in detail..." required></textarea>
+      </div>
+      <div class="form-group" style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+        <div>
+          <label class="form-label">Priority</label>
+          <select class="form-control" id="complaint-priority">
+            <option>Low</option><option selected>Medium</option><option>High</option>
+          </select>
+        </div>
+        <div>
+          <label class="form-label">Location (optional)</label>
+          <input type="text" class="form-control" id="complaint-location" placeholder="e.g. Block A">
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-secondary" id="cancel-complaint">Cancel</button>
+        <button type="submit" class="btn btn-primary">Submit Complaint</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/complaints.js"></script>
+<script>requireAuth();</script>
+</body>
+</html>

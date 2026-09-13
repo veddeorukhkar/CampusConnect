@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Admin Dashboard — CampusConnect</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/dashboard.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+<body data-admin-page="true">
+
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand"><i class="fa-solid fa-graduation-cap"></i> CampusConnect</div>
+    <div class="user-chip">
+      <div class="avatar js-user-initials">?</div>
+      <div><div class="name js-user-name">Loading...</div><div class="role js-user-role">admin</div></div>
+    </div>
+    <nav class="side-nav">
+      <div class="nav-section-title">Overview</div>
+      <a href="admin-dashboard.html" class="active"><i class="fa-solid fa-chart-simple"></i> Dashboard</a>
+      <a href="admin-analytics.html"><i class="fa-solid fa-chart-pie"></i> Analytics</a>
+      <div class="nav-section-title">Manage</div>
+      <a href="admin-complaints.html"><i class="fa-solid fa-comment-dots"></i> Complaints</a>
+      <a href="admin-requests.html"><i class="fa-solid fa-file-circle-check"></i> Service Requests</a>
+      <a href="admin-students.html"><i class="fa-solid fa-users"></i> Students</a>
+      <a href="admin-notices.html"><i class="fa-solid fa-bullhorn"></i> Notices</a>
+      <a href="admin-events.html"><i class="fa-solid fa-calendar-days"></i> Events</a>
+    </nav>
+    <div class="sidebar-footer"><a href="#" class="js-logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Log Out</a></div>
+  </aside>
+
+  <main class="main-content">
+    <div class="topbar">
+      <div class="flex gap-12" style="align-items:center;">
+        <button class="hamburger icon-btn" id="hamburger-btn"><i class="fa-solid fa-bars"></i></button>
+        <h1>Admin Dashboard</h1>
+      </div>
+      <div class="topbar-actions"><button class="icon-btn" onclick="toggleTheme()"><i id="theme-icon" class="fa-solid fa-moon"></i></button></div>
+    </div>
+
+    <div class="page-body">
+      <div class="stats-grid" id="admin-stats-grid">
+        <div class="card stat-card"><div class="skeleton" style="height:80px;"></div></div>
+        <div class="card stat-card"><div class="skeleton" style="height:80px;"></div></div>
+        <div class="card stat-card"><div class="skeleton" style="height:80px;"></div></div>
+        <div class="card stat-card"><div class="skeleton" style="height:80px;"></div></div>
+        <div class="card stat-card"><div class="skeleton" style="height:80px;"></div></div>
+        <div class="card stat-card"><div class="skeleton" style="height:80px;"></div></div>
+      </div>
+
+      <div class="charts-row">
+        <div class="card chart-card">
+          <div class="section-header"><h2>Complaints by Category</h2></div>
+          <canvas id="chart-complaints-category"></canvas>
+        </div>
+        <div class="card chart-card">
+          <div class="section-header"><h2>Complaint Status Distribution</h2></div>
+          <canvas id="chart-status-doughnut"></canvas>
+        </div>
+      </div>
+
+      <div class="card chart-card mb-24">
+        <div class="section-header"><h2>Monthly Complaint & Request Trends</h2></div>
+        <canvas id="chart-monthly-trend"></canvas>
+      </div>
+
+      <div class="charts-row">
+        <div class="card" style="padding:20px;">
+          <div class="section-header"><h2>Recent Complaints</h2><a href="admin-complaints.html">View all</a></div>
+          <div id="admin-recent-complaints"><div class="spinner"></div></div>
+        </div>
+        <div class="card" style="padding:20px;">
+          <div class="section-header"><h2>Recent Activity</h2></div>
+          <div id="admin-activity-feed"><div class="spinner"></div></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="js/api.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/admin.js"></script>
+<script>requireAdmin(); if (document.getElementById("admin-stats-grid")) loadAdminDashboard();</script>
+</body>
+</html>

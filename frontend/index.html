@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CampusConnect — Smart Campus Management & Student Service Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a href="index.html" class="brand"><i class="fa-solid fa-graduation-cap"></i> CampusConnect</a>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#how-it-works">How It Works</a>
+      <a href="#about">About</a>
+    </div>
+    <div class="nav-actions">
+      <button class="icon-btn" onclick="toggleTheme()"><i id="theme-icon" class="fa-solid fa-moon"></i></button>
+      <a href="login.html" class="btn btn-secondary btn-sm">Log In</a>
+      <a href="register.html" class="btn btn-primary btn-sm">Get Started</a>
+    </div>
+    <button class="hamburger" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')"><i class="fa-solid fa-bars"></i></button>
+  </div>
+  <div id="mobile-menu" class="hidden" style="padding:16px 24px; border-top:1px solid var(--border); display:flex; flex-direction:column; gap:14px;">
+    <a href="#features">Features</a>
+    <a href="#how-it-works">How It Works</a>
+    <a href="#about">About</a>
+    <a href="login.html" class="btn btn-secondary btn-sm">Log In</a>
+    <a href="register.html" class="btn btn-primary btn-sm">Get Started</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="container hero-inner">
+    <div>
+      <div class="hero-badge"><i class="fa-solid fa-bolt"></i> Built for Modern Campuses</div>
+      <h1>One Campus. One Smart Platform.</h1>
+      <p class="subtitle">CampusConnect brings student services, complaints, notices, events and campus communication together in one simple digital platform.</p>
+      <div class="hero-actions">
+        <a href="register.html" class="btn btn-primary">Get Started <i class="fa-solid fa-arrow-right"></i></a>
+        <a href="#features" class="btn btn-secondary">Explore Platform</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="mock-topbar"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+      <div class="mock-card">
+        <div class="mock-label">Total Requests</div>
+        <div class="mock-stat">1,248</div>
+        <div class="mock-bars">
+          <div style="height:40%"></div><div style="height:70%"></div><div style="height:55%"></div>
+          <div style="height:90%"></div><div style="height:65%"></div><div style="height:80%"></div><div style="height:50%"></div>
+        </div>
+      </div>
+      <div class="mock-card flex-between">
+        <div><div class="mock-label">Resolution Rate</div><div class="mock-stat" style="font-size:18px;">94%</div></div>
+        <i class="fa-solid fa-chart-line" style="color:#06b6d4;font-size:22px;"></i>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="stats-strip">
+  <div class="container">
+    <div><div class="num">500+</div><div class="label">Students</div></div>
+    <div><div class="num">1,200+</div><div class="label">Requests Handled</div></div>
+    <div><div class="num">94%</div><div class="label">Resolution Rate</div></div>
+    <div><div class="num">24/7</div><div class="label">Digital Access</div></div>
+  </div>
+</section>
+
+<section class="section" id="features">
+  <div class="container">
+    <div class="section-title">
+      <span class="eyebrow">Features</span>
+      <h2>Everything your campus needs, in one place</h2>
+      <p>From complaints to events, CampusConnect keeps students and administrators connected.</p>
+    </div>
+    <div class="feature-grid">
+      <div class="card feature-card">
+        <div class="feature-icon" style="background:linear-gradient(135deg,#2563eb,#0f2244)"><i class="fa-solid fa-comment-dots"></i></div>
+        <h3>Smart Complaints</h3>
+        <p>Submit and track campus complaints with real-time status updates and admin responses.</p>
+      </div>
+      <div class="card feature-card">
+        <div class="feature-icon" style="background:linear-gradient(135deg,#06b6d4,#2563eb)"><i class="fa-solid fa-file-circle-check"></i></div>
+        <h3>Service Requests</h3>
+        <p>Request ID cards, transcripts, certificates and more without standing in a queue.</p>
+      </div>
+      <div class="card feature-card">
+        <div class="feature-icon" style="background:linear-gradient(135deg,#7c3aed,#2563eb)"><i class="fa-solid fa-bullhorn"></i></div>
+        <h3>Digital Notices</h3>
+        <p>Never miss an important announcement with pinned, categorized campus notices.</p>
+      </div>
+      <div class="card feature-card">
+        <div class="feature-icon" style="background:linear-gradient(135deg,#12b76a,#0f766e)"><i class="fa-solid fa-calendar-days"></i></div>
+        <h3>Campus Events</h3>
+        <p>Discover and register for technical, cultural and sports events happening on campus.</p>
+      </div>
+      <div class="card feature-card">
+        <div class="feature-icon" style="background:linear-gradient(135deg,#f79009,#f04438)"><i class="fa-solid fa-location-crosshairs"></i></div>
+        <h3>Real-Time Tracking</h3>
+        <p>Track the exact status of every complaint and request from submission to resolution.</p>
+      </div>
+      <div class="card feature-card">
+        <div class="feature-icon" style="background:linear-gradient(135deg,#0f2244,#7c3aed)"><i class="fa-solid fa-chart-pie"></i></div>
+        <h3>Admin Analytics</h3>
+        <p>Powerful dashboards give administrators full visibility into campus operations.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="how-it-works" style="background:var(--surface);">
+  <div class="container">
+    <div class="section-title">
+      <span class="eyebrow">How It Works</span>
+      <h2>Get started in four simple steps</h2>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card"><div class="step-num">1</div><h4>Register</h4><p>Create your free student account in under a minute.</p></div>
+      <div class="step-card"><div class="step-num">2</div><h4>Submit</h4><p>Raise a complaint or service request from your dashboard.</p></div>
+      <div class="step-card"><div class="step-num">3</div><h4>Track</h4><p>Monitor real-time status updates on every submission.</p></div>
+      <div class="step-card"><div class="step-num">4</div><h4>Resolve</h4><p>Get notified the moment your issue is resolved.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="about">
+  <div class="container">
+    <div class="section-title">
+      <span class="eyebrow">About CampusConnect</span>
+      <h2>Designed to simplify campus life</h2>
+      <p>CampusConnect was built to replace scattered paperwork, notice boards, and long queues with a single, unified digital experience — giving students a voice and administrators the tools to respond faster.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="cta-section">
+    <h2>Ready to modernize your campus?</h2>
+    <p>Join hundreds of students already using CampusConnect.</p>
+    <a href="register.html" class="btn btn-primary">Create Free Account</a>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="brand" style="color:#fff;margin-bottom:12px;"><i class="fa-solid fa-graduation-cap"></i> CampusConnect</div>
+        <p style="font-size:14px;max-width:280px;">A smart campus management and student service portal built for modern colleges.</p>
+      </div>
+      <div><h4>Platform</h4><ul><li><a href="#features">Features</a></li><li><a href="#how-it-works">How It Works</a></li></ul></div>
+      <div><h4>Account</h4><ul><li><a href="login.html">Log In</a></li><li><a href="register.html">Register</a></li></ul></div>
+      <div><h4>Project</h4><ul><li>Final Year Project</li><li>Demo Build 2026</li></ul></div>
+    </div>
+    <div class="footer-bottom">© 2026 CampusConnect. Built as a final-year academic project.</div>
+  </div>
+</footer>
+
+<script src="js/utils.js"></script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Log In — CampusConnect</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+<div class="auth-wrapper">
+  <div class="auth-side">
+    <a href="index.html" class="brand" style="color:#fff;"><i class="fa-solid fa-graduation-cap"></i> CampusConnect</a>
+    <h2>Welcome back to your campus, digitally.</h2>
+    <p>Log in to track complaints, manage requests, and stay updated on everything happening around campus.</p>
+    <div class="auth-feature"><i class="fa-solid fa-shield-halved"></i><div>Secure JWT-based authentication</div></div>
+    <div class="auth-feature"><i class="fa-solid fa-bolt"></i><div>Real-time status tracking</div></div>
+    <div class="auth-feature"><i class="fa-solid fa-chart-line"></i><div>Personalized dashboard insights</div></div>
+  </div>
+
+  <div class="auth-form-side">
+    <div class="auth-box">
+      <button class="icon-btn" style="margin-bottom:16px;" onclick="toggleTheme()"><i id="theme-icon" class="fa-solid fa-moon"></i></button>
+      <h1>Log In</h1>
+      <p class="sub">Enter your credentials to access your dashboard.</p>
+
+      <form id="login-form">
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <div class="input-icon-wrap">
+            <i class="fa-solid fa-envelope field-icon"></i>
+            <input type="email" class="form-control" id="login-email" placeholder="you@campusconnect.com" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <div class="input-icon-wrap">
+            <i class="fa-solid fa-lock field-icon"></i>
+            <input type="password" class="form-control" id="login-password" placeholder="Enter your password" required>
+            <span class="toggle-visibility" id="toggle-login-password"><i class="fa-solid fa-eye"></i></span>
+          </div>
+        </div>
+        <div class="remember-row">
+          <label class="checkbox-row"><input type="checkbox" id="remember-me"> Remember me</label>
+          <a href="#" id="forgot-password-link" style="color:var(--blue-600); font-weight:600;">Forgot password?</a>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Log In</button>
+      </form>
+
+      <p class="auth-footer-link">Don't have an account? <a href="register.html" style="color:var(--blue-600); font-weight:700;">Register here</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- Forgot Password Modal (UI only, as specified) -->
+<div class="modal-overlay" id="forgot-modal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3>Reset Password</h3>
+      <span class="modal-close" id="close-forgot-modal"><i class="fa-solid fa-xmark"></i></span>
+    </div>
+    <p class="text-secondary mb-16">Enter your registered email and we'll send you password reset instructions.</p>
+    <div class="form-group">
+      <input type="email" class="form-control" placeholder="you@campusconnect.com">
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" id="cancel-forgot">Cancel</button>
+      <button class="btn btn-primary" id="send-reset-link">Send Reset Link</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/auth.js"></script>
+<script>
+  redirectIfLoggedIn();
+  setupPasswordToggle("toggle-login-password", "login-password");
+
+  const forgotModal = document.getElementById("forgot-modal");
+  document.getElementById("forgot-password-link").addEventListener("click", (e) => { e.preventDefault(); forgotModal.classList.add("active"); });
+  document.getElementById("close-forgot-modal").addEventListener("click", () => forgotModal.classList.remove("active"));
+  document.getElementById("cancel-forgot").addEventListener("click", () => forgotModal.classList.remove("active"));
+  document.getElementById("send-reset-link").addEventListener("click", () => {
+    forgotModal.classList.remove("active");
+    showToast("If this email exists, reset instructions have been sent.", "success");
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Create Account — CampusConnect</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+<div class="auth-wrapper">
+  <div class="auth-side">
+    <a href="index.html" class="brand" style="color:#fff;"><i class="fa-solid fa-graduation-cap"></i> CampusConnect</a>
+    <h2>Join your campus community today.</h2>
+    <p>Create your account to submit complaints, request services, and stay on top of campus events and notices.</p>
+    <div class="auth-feature"><i class="fa-solid fa-user-check"></i><div>Quick, secure registration</div></div>
+    <div class="auth-feature"><i class="fa-solid fa-clock"></i><div>Takes less than a minute</div></div>
+    <div class="auth-feature"><i class="fa-solid fa-lock"></i><div>Your data is encrypted and secure</div></div>
+  </div>
+
+  <div class="auth-form-side">
+    <div class="auth-box">
+      <button class="icon-btn" style="margin-bottom:16px;" onclick="toggleTheme()"><i id="theme-icon" class="fa-solid fa-moon"></i></button>
+      <h1>Create Your Account</h1>
+      <p class="sub">Fill in your details to get started with CampusConnect.</p>
+
+      <form id="register-form">
+        <div class="form-group">
+          <label class="form-label">Full Name</label>
+          <input type="text" class="form-control" id="register-name" placeholder="e.g. Aditya Kumar" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Student ID</label>
+          <input type="text" class="form-control" id="register-studentid" placeholder="e.g. STU2026045" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input type="email" class="form-control" id="register-email" placeholder="you@campusconnect.com" required>
+        </div>
+        <div class="form-group" style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+          <div>
+            <label class="form-label">Department</label>
+            <select class="form-control" id="register-department" required>
+              <option value="">Select</option>
+              <option>Computer Science</option>
+              <option>Electronics</option>
+              <option>Mechanical</option>
+              <option>Civil</option>
+              <option>Business Administration</option>
+            </select>
+          </div>
+          <div>
+            <label class="form-label">Year</label>
+            <select class="form-control" id="register-year" required>
+              <option value="">Select</option>
+              <option>1st Year</option>
+              <option>2nd Year</option>
+              <option>3rd Year</option>
+              <option>4th Year</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <div class="input-icon-wrap">
+            <i class="fa-solid fa-lock field-icon"></i>
+            <input type="password" class="form-control" id="register-password" placeholder="Create a password" required>
+            <span class="toggle-visibility" id="toggle-register-password"><i class="fa-solid fa-eye"></i></span>
+          </div>
+          <div class="strength-bar"><span></span><span></span><span></span><span></span></div>
+          <div class="form-hint">Use 8+ characters with a mix of letters, numbers & symbols.</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Confirm Password</label>
+          <input type="password" class="form-control" id="register-confirm-password" placeholder="Re-enter your password" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Create Account</button>
+      </form>
+
+      <p class="auth-footer-link">Already have an account? <a href="login.html" style="color:var(--blue-600); font-weight:700;">Log in here</a></p>
+    </div>
+  </div>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/auth.js"></script>
+<script>
+  redirectIfLoggedIn();
+  setupPasswordToggle("toggle-register-password", "register-password");
+</script>
+</body>
+</html>

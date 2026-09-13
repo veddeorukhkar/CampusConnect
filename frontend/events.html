@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Events — CampusConnect</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/dashboard.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand"><i class="fa-solid fa-graduation-cap"></i> CampusConnect</div>
+    <div class="user-chip">
+      <div class="avatar js-user-initials">?</div>
+      <div><div class="name js-user-name">Loading...</div><div class="role js-user-role">student</div></div>
+    </div>
+    <nav class="side-nav">
+      <a href="student-dashboard.html"><i class="fa-solid fa-chart-simple"></i> Dashboard</a>
+      <a href="complaints.html"><i class="fa-solid fa-comment-dots"></i> Complaints</a>
+      <a href="requests.html"><i class="fa-solid fa-file-circle-check"></i> Service Requests</a>
+      <a href="notices.html"><i class="fa-solid fa-bullhorn"></i> Notices</a>
+      <a href="events.html" class="active"><i class="fa-solid fa-calendar-days"></i> Events</a>
+      <a href="profile.html"><i class="fa-solid fa-user"></i> Profile</a>
+    </nav>
+    <div class="sidebar-footer"><a href="#" class="js-logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Log Out</a></div>
+  </aside>
+
+  <main class="main-content">
+    <div class="topbar">
+      <div class="flex gap-12" style="align-items:center;">
+        <button class="hamburger icon-btn" id="hamburger-btn"><i class="fa-solid fa-bars"></i></button>
+        <h1>Campus Events</h1>
+      </div>
+      <div class="topbar-actions"><button class="icon-btn" onclick="toggleTheme()"><i id="theme-icon" class="fa-solid fa-moon"></i></button></div>
+    </div>
+
+    <div class="page-body">
+      <div id="events-grid" style="display:grid; grid-template-columns:repeat(3,1fr); gap:18px;"><div class="spinner"></div></div>
+    </div>
+  </main>
+</div>
+
+<div class="modal-overlay" id="register-event-modal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3>Register for Event</h3>
+      <span class="modal-close" id="close-register-modal"><i class="fa-solid fa-xmark"></i></span>
+    </div>
+    <p class="text-secondary mb-16">You're about to register for "<span id="register-event-title"></span>". A confirmation will be shown once complete.</p>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" id="cancel-register-event">Cancel</button>
+      <button class="btn btn-primary" id="confirm-register-event">Confirm Registration</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/events.js"></script>
+<script>requireAuth();</script>
+<style>@media(max-width:960px){#events-grid{grid-template-columns:repeat(2,1fr) !important;}} @media(max-width:640px){#events-grid{grid-template-columns:1fr !important;}}</style>
+</body>
+</html>

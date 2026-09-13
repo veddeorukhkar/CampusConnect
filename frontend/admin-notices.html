@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Manage Notices — CampusConnect Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/dashboard.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+<body data-admin-page="true">
+
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand"><i class="fa-solid fa-graduation-cap"></i> CampusConnect</div>
+    <div class="user-chip">
+      <div class="avatar js-user-initials">?</div>
+      <div><div class="name js-user-name">Loading...</div><div class="role js-user-role">admin</div></div>
+    </div>
+    <nav class="side-nav">
+      <div class="nav-section-title">Overview</div>
+      <a href="admin-dashboard.html"><i class="fa-solid fa-chart-simple"></i> Dashboard</a>
+      <a href="admin-analytics.html"><i class="fa-solid fa-chart-pie"></i> Analytics</a>
+      <div class="nav-section-title">Manage</div>
+      <a href="admin-complaints.html"><i class="fa-solid fa-comment-dots"></i> Complaints</a>
+      <a href="admin-requests.html"><i class="fa-solid fa-file-circle-check"></i> Service Requests</a>
+      <a href="admin-students.html"><i class="fa-solid fa-users"></i> Students</a>
+      <a href="admin-notices.html" class="active"><i class="fa-solid fa-bullhorn"></i> Notices</a>
+      <a href="admin-events.html"><i class="fa-solid fa-calendar-days"></i> Events</a>
+    </nav>
+    <div class="sidebar-footer"><a href="#" class="js-logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Log Out</a></div>
+  </aside>
+
+  <main class="main-content">
+    <div class="topbar">
+      <div class="flex gap-12" style="align-items:center;">
+        <button class="hamburger icon-btn" id="hamburger-btn"><i class="fa-solid fa-bars"></i></button>
+        <h1>Manage Notices</h1>
+      </div>
+      <div class="topbar-actions">
+        <button class="icon-btn" onclick="toggleTheme()"><i id="theme-icon" class="fa-solid fa-moon"></i></button>
+        <button class="btn btn-primary btn-sm" id="open-notice-modal"><i class="fa-solid fa-plus"></i> New Notice</button>
+      </div>
+    </div>
+
+    <div class="page-body">
+      <div class="card" style="padding:20px;">
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>Title</th><th>Category</th><th>Priority</th><th>Date</th><th>Actions</th></tr></thead>
+            <tbody id="admin-notices-tbody"><tr><td colspan="5"><div class="spinner"></div></td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="modal-overlay" id="notice-modal">
+  <div class="modal-box" style="max-width:520px;">
+    <div class="modal-header"><h3 id="notice-modal-title">Create Notice</h3><span class="modal-close" id="close-notice-modal"><i class="fa-solid fa-xmark"></i></span></div>
+    <form id="notice-form">
+      <div class="form-group"><label class="form-label">Title</label><input type="text" class="form-control" id="notice-title-input" required></div>
+      <div class="form-group"><label class="form-label">Description</label><textarea class="form-control" id="notice-description-input" required></textarea></div>
+      <div class="form-group" style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+        <div><label class="form-label">Category</label>
+          <select class="form-control" id="notice-category-input">
+            <option>General</option><option>Academic</option><option>Exam</option><option>Event</option><option>Administration</option><option>IT</option>
+          </select>
+        </div>
+        <div><label class="form-label">Priority</label>
+          <select class="form-control" id="notice-priority-input"><option>Low</option><option selected>Medium</option><option>High</option></select>
+        </div>
+      </div>
+      <label class="checkbox-row mb-16"><input type="checkbox" id="notice-pinned-input"> Pin this notice to the top</label>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-secondary" id="cancel-notice">Cancel</button>
+        <button type="submit" class="btn btn-primary">Save Notice</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/admin.js"></script>
+<script>requireAdmin();</script>
+</body>
+</html>

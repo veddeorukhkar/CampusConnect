@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dashboard — CampusConnect</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/dashboard.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand"><i class="fa-solid fa-graduation-cap"></i> CampusConnect</div>
+    <div class="user-chip">
+      <div class="avatar js-user-initials">?</div>
+      <div><div class="name js-user-name">Loading...</div><div class="role js-user-role">student</div></div>
+    </div>
+    <nav class="side-nav">
+      <a href="student-dashboard.html" class="active"><i class="fa-solid fa-chart-simple"></i> Dashboard</a>
+      <a href="complaints.html"><i class="fa-solid fa-comment-dots"></i> Complaints</a>
+      <a href="requests.html"><i class="fa-solid fa-file-circle-check"></i> Service Requests</a>
+      <a href="notices.html"><i class="fa-solid fa-bullhorn"></i> Notices</a>
+      <a href="events.html"><i class="fa-solid fa-calendar-days"></i> Events</a>
+      <a href="profile.html"><i class="fa-solid fa-user"></i> Profile</a>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="#" class="js-logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Log Out</a>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <div class="topbar">
+      <div class="flex gap-12" style="align-items:center;">
+        <button class="hamburger icon-btn" id="hamburger-btn"><i class="fa-solid fa-bars"></i></button>
+        <h1>Dashboard</h1>
+      </div>
+      <div class="topbar-actions">
+        <button class="icon-btn" onclick="toggleTheme()"><i id="theme-icon" class="fa-solid fa-moon"></i></button>
+      </div>
+    </div>
+
+    <div class="page-body">
+      <h2 style="margin-bottom:4px;">Good <span id="greeting-time">day</span>, <span class="js-user-firstname">Student</span> 👋</h2>
+      <p class="text-secondary mb-24">Here's what's happening on campus today.</p>
+
+      <div class="stats-grid" id="stats-grid">
+        <div class="card stat-card"><div class="skeleton" style="height:80px;"></div></div>
+        <div class="card stat-card"><div class="skeleton" style="height:80px;"></div></div>
+        <div class="card stat-card"><div class="skeleton" style="height:80px;"></div></div>
+        <div class="card stat-card"><div class="skeleton" style="height:80px;"></div></div>
+      </div>
+
+      <div class="charts-row">
+        <div class="card">
+          <div class="section-header" style="padding:20px 20px 0;"><h2>Recent Requests</h2><a href="complaints.html">View all</a></div>
+          <div class="table-wrap" style="padding:0 20px 20px;">
+            <table class="data-table" id="recent-requests-table">
+              <thead><tr><th>Subject</th><th>Type</th><th>Status</th><th>Date</th></tr></thead>
+              <tbody><tr><td colspan="4"><div class="spinner"></div></td></tr></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card" style="padding:20px;">
+          <div class="section-header"><h2>Activity Timeline</h2></div>
+          <div id="activity-timeline"><div class="spinner"></div></div>
+        </div>
+      </div>
+
+      <div class="charts-row">
+        <div class="card" style="padding:20px;">
+          <div class="section-header"><h2>Latest Notices</h2><a href="notices.html">View all</a></div>
+          <div id="dash-notices"><div class="spinner"></div></div>
+        </div>
+        <div class="card" style="padding:20px;">
+          <div class="section-header"><h2>Upcoming Events</h2><a href="events.html">View all</a></div>
+          <div id="dash-events"><div class="spinner"></div></div>
+        </div>
+      </div>
+
+      <div class="card" style="padding:20px;">
+        <div class="section-header"><h2>Quick Actions</h2></div>
+        <div class="flex flex-wrap gap-12">
+          <a href="complaints.html" class="btn btn-primary"><i class="fa-solid fa-plus"></i> New Complaint</a>
+          <a href="requests.html" class="btn btn-secondary"><i class="fa-solid fa-plus"></i> Service Request</a>
+          <a href="notices.html" class="btn btn-secondary"><i class="fa-solid fa-bullhorn"></i> View Notices</a>
+          <a href="events.html" class="btn btn-secondary"><i class="fa-solid fa-calendar-days"></i> View Events</a>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/dashboard.js"></script>
+<script>requireAuth();</script>
+</body>
+</html>
