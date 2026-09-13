@@ -393,6 +393,7 @@ function initNoticeForm() {
       category: document.getElementById("notice-category-input").value,
       priority: document.getElementById("notice-priority-input").value,
       pinned: document.getElementById("notice-pinned-input").checked,
+      attachmentUrl: document.getElementById("notice-attachment-input").value.trim(),
     };
     try {
       if (editId) { await api.put(`/notices/${editId}`, payload); showToast("Notice updated!", "success"); }
@@ -430,13 +431,16 @@ function renderAdminEventsTable(list) {
       <td data-label="Date">${e.date}</td>
       <td data-label="Time">${e.time}</td>
       <td data-label="Location">${escapeHtml(e.location)}</td>
-      <td data-label="Actions">
+           <td data-label="Actions">
+        <button class="btn btn-secondary btn-sm js-view-registrations" data-id="${e._id}" data-title="${escapeHtml(e.title)}">Registrations</button>
         <button class="btn btn-secondary btn-sm js-edit-event" data-id="${e._id}">Edit</button>
         <button class="btn btn-danger btn-sm js-delete-event" data-id="${e._id}">Delete</button>
       </td>
     </tr>`).join("");
 
-  document.querySelectorAll(".js-edit-event").forEach((btn) => btn.addEventListener("click", () => openEventModal(btn.dataset.id)));
+    document.querySelectorAll(".js-view-registrations").forEach((btn) => {
+    btn.addEventListener("click", () => openRegistrationsModal(btn.dataset.id, btn.dataset.title));
+  });
   document.querySelectorAll(".js-delete-event").forEach((btn) => btn.addEventListener("click", async () => {
     const confirmed = await confirmModal("Delete Event", "This event will be permanently deleted. Continue?");
     if (!confirmed) return;
@@ -539,6 +543,38 @@ function renderAnalyticsTrendChart(data) {
   new Chart(el, { type: "line", data: { labels: data.map((d) => d._id), datasets: [{ label: "Complaints", data: data.map((d) => d.count), borderColor: "#7c3aed", backgroundColor: "rgba(124,58,237,0.12)", tension: 0.35, fill: true }] }, options: { plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { precision: 0 } } } } });
 }
 
+async function openRegistrationsModal(eventId, eventTitle) {
+  const modal = document.getElementById("registrations-modal");
+  document.getElementById("registrations-modal-title").textContent = `Registrations — ${eventTitle}`;
+  const listEl = document.getElementById("registrations-list");
+  listEl.innerHTML = '<div class="spinner"></div>';
+  modal.classList.add("active");
+
+  try {
+    const registrations = await api.get(`/events/${eventId}/registrations`);
+    if (registrations.length === 0) {
+      listEl.innerHTML = `<div class="state-box"><i class="fa-regular fa-user"></i><h4>No registrations yet</h4></div>`;
+      return;
+    }
+    listEl.innerHTML = registrations.map((r) => `
+      <div class="timeline-item">
+        <div class="timeline-dot"><i class="fa-solid fa-user"></i></div>
+        <div class="timeline-content">
+          <div class="t-title">${r.userId ? escapeHtml(r.userId.name) : "Unknown"} (${r.userId ? escapeHtml(r.userId.studentId) : "-"})</div>
+          <div class="t-time">📞 ${escapeHtml(r.phone)} · Guests: ${r.guests} · ${timeAgo(r.createdAt)}</div>
+        </div>
+      </div>`).join("");
+  } catch (error) {
+    listEl.innerHTML = `<div class="state-box"><i class="fa-solid fa-triangle-exclamation"></i><h4>Could not load registrations</h4></div>`;
+  }
+}
+
+function initRegistrationsModal() {
+  const modal = document.getElementById("registrations-modal");
+  if (!modal) return;
+  document.getElementById("close-registrations-modal").addEventListener("click", () => modal.classList.remove("active"));
+}
+
 // ============================================================
 // PAGE INIT — decides which loaders to run based on what's on the page
 // ============================================================
@@ -546,6 +582,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initManageModal();
   initNoticeForm();
   initEventForm();
+  initRegistrationsModal();
 
   if (document.getElementById("admin-complaints-tbody")) {
     loadAdminComplaints();

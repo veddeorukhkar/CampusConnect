@@ -31,6 +31,10 @@ function renderNoticesGrid(list) {
       <p class="text-secondary" style="font-size:14px; margin-bottom:12px;">${escapeHtml(n.description)}</p>
       <div class="text-muted" style="font-size:12.5px;"><i class="fa-regular fa-clock"></i> ${formatDate(n.createdAt)}</div>
     </div>`).join("");
+
+      document.querySelectorAll(".js-notice-card").forEach((card) => {
+    card.addEventListener("click", () => openNoticeViewModal(card.dataset.id));
+  });
 }
 
 function applyNoticeFilters() {

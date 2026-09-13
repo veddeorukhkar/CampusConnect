@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FAQ — CampusConnect</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/responsive.css">
+<style>
+  details.faq-item { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-md); padding:16px 18px; margin-bottom:12px; }
+  details.faq-item summary { cursor:pointer; font-weight:600; list-style:none; }
+  details.faq-item summary::-webkit-details-marker { display:none; }
+  details.faq-item p { margin-top:10px; color:var(--text-secondary); font-size:14.5px; }
+</style>
+</head>
+<body>
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a href="index.html" class="brand"><i class="fa-solid fa-graduation-cap"></i> CampusConnect</a>
+    <div class="nav-links"><a href="help.html">Help</a><a href="faq.html">FAQ</a></div>
+    <div class="nav-actions">
+      <button class="icon-btn" onclick="toggleTheme()"><i id="theme-icon" class="fa-solid fa-moon"></i></button>
+      <a href="login.html" class="btn btn-secondary btn-sm">Log In</a>
+    </div>
+  </div>
+</nav>
+<section class="section">
+  <div class="container" style="max-width:760px;">
+    <div class="section-title" style="text-align:left; margin-bottom:30px;">
+      <span class="eyebrow">Support</span>
+      <h2>Frequently Asked Questions</h2>
+    </div>
+    <details class="faq-item"><summary>Who can create a CampusConnect account?</summary><p>Any enrolled student with a valid student ID and college email can register. Admin accounts are created separately.</p></details>
+    <details class="faq-item"><summary>How long does it take for a complaint to be resolved?</summary><p>Resolution time depends on the category and priority. Track live updates from the Complaints page.</p></details>
+    <details class="faq-item"><summary>Can I edit a complaint after submitting it?</summary><p>Complaints can't be edited once submitted. Submit a new one referencing the earlier complaint if needed.</p></details>
+    <details class="faq-item"><summary>How do I know my event registration was successful?</summary><p>You'll get a success message immediately, and it'll show under "My Registered Events" on the Events page.</p></details>
+    <details class="faq-item"><summary>I forgot my password. What do I do?</summary><p>Use "Forgot password?" on the Login page to receive reset instructions.</p></details>
+    <details class="faq-item"><summary>Is my personal data safe?</summary><p>Yes. Passwords are encrypted and access is protected. See our <a href="privacy.html" style="color:var(--blue-600);">Privacy Policy</a>.</p></details>
+  </div>
+</section>
+<footer><div class="container"><div class="footer-bottom">© 2026 CampusConnect. Built as a final-year academic project.</div></div></footer>
+<script src="js/utils.js"></script>
+</body>
+</html>

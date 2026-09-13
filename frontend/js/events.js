@@ -1,13 +1,17 @@
 // events.js — handles the student events page
 
-// events.js — handles the student events page
-
 let allEventsList = [];
+let myRegisteredIds = [];
 
 async function loadEvents() {
   const grid = document.getElementById("events-grid");
   try {
-    allEventsList = await api.get("/events");
+    const [events, registeredIds] = await Promise.all([
+      api.get("/events"),
+      api.get("/events/my-registrations"),
+    ]);
+    allEventsList = events;
+    myRegisteredIds = registeredIds;
     renderEventsGrid(allEventsList);
     renderRegisteredEvents();
   } catch (error) {
@@ -44,11 +48,13 @@ function renderEventsGrid(list) {
         <p class="text-secondary" style="font-size:13.5px; margin-bottom:12px;">${escapeHtml(e.description.slice(0, 80))}${e.description.length > 80 ? "..." : ""}</p>
         <div class="text-muted" style="font-size:12.5px; margin-bottom:4px;"><i class="fa-regular fa-calendar"></i> ${e.date} · ${e.time}</div>
         <div class="text-muted" style="font-size:12.5px; margin-bottom:14px;"><i class="fa-solid fa-location-dot"></i> ${escapeHtml(e.location)}</div>
-               <button class="btn btn-primary btn-sm btn-block js-register-btn" data-title="${escapeHtml(e.title)}" data-id="${e._id}">Register</button>
+        ${myRegisteredIds.includes(e._id)
+          ? `<button class="btn btn-secondary btn-sm btn-block" disabled><i class="fa-solid fa-check"></i> Registered</button>`
+          : `<button class="btn btn-primary btn-sm btn-block js-register-btn" data-title="${escapeHtml(e.title)}" data-id="${e._id}">Register</button>`}
       </div>
     </div>`).join("");
 
-    document.querySelectorAll(".js-register-btn").forEach((btn) => {
+  document.querySelectorAll(".js-register-btn").forEach((btn) => {
     btn.addEventListener("click", () => {
       document.getElementById("register-event-title").textContent = btn.dataset.title;
       document.getElementById("register-event-modal").dataset.eventId = btn.dataset.id;
@@ -57,43 +63,12 @@ function renderEventsGrid(list) {
   });
 }
 
-function initEventRegisterModal() {
-  const modal = document.getElementById("register-event-modal");
-  if (!modal) return;
-  document.getElementById("close-register-modal").addEventListener("click", () => modal.classList.remove("active"));
-  document.getElementById("cancel-register-event").addEventListener("click", () => modal.classList.remove("active"));
-    document.getElementById("confirm-register-event").addEventListener("click", () => {
-    const eventId = modal.dataset.eventId;
-    const registeredIds = getRegisteredEventIds();
-    if (!registeredIds.includes(eventId)) {
-      registeredIds.push(eventId);
-      localStorage.setItem("cc_registered_events", JSON.stringify(registeredIds));
-    }
-    modal.classList.remove("active");
-    showToast("You're registered for this event! 🎉", "success");
-    renderRegisteredEvents();
-  });
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  if (document.getElementById("events-grid") && !document.body.dataset.adminPage) {
-    loadEvents();
-    initEventRegisterModal();
-  }
-});
-
-function getRegisteredEventIds() {
-  const raw = localStorage.getItem("cc_registered_events");
-  return raw ? JSON.parse(raw) : [];
-}
-
 function renderRegisteredEvents() {
   const wrap = document.getElementById("registered-events-wrap");
   const grid = document.getElementById("registered-events-grid");
   if (!wrap || !grid) return;
 
-  const registeredIds = getRegisteredEventIds();
-  const registeredEvents = allEventsList.filter((e) => registeredIds.includes(e._id));
+  const registeredEvents = allEventsList.filter((e) => myRegisteredIds.includes(e._id));
 
   if (registeredEvents.length === 0) {
     wrap.classList.add("hidden");
@@ -112,3 +87,46 @@ function renderRegisteredEvents() {
       </div>
     </div>`).join("");
 }
+
+function initEventRegisterModal() {
+  const modal = document.getElementById("register-event-modal");
+  const form = document.getElementById("event-register-form");
+  if (!modal || !form) return;
+
+  document.getElementById("close-register-modal").addEventListener("click", () => modal.classList.remove("active"));
+  document.getElementById("cancel-register-event").addEventListener("click", () => modal.classList.remove("active"));
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const eventId = modal.dataset.eventId;
+    const submitBtn = form.querySelector("button[type=submit]");
+    const payload = {
+      phone: document.getElementById("register-phone").value.trim(),
+      guests: Number(document.getElementById("register-guests").value) || 1,
+    };
+
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Registering...';
+
+    try {
+      await api.post(`/events/${eventId}/register`, payload);
+      modal.classList.remove("active");
+      form.reset();
+      showToast("You're registered for this event! 🎉", "success");
+      myRegisteredIds.push(eventId);
+      renderRegisteredEvents();
+    } catch (error) {
+      showToast(error.message, "error");
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = "Confirm Registration";
+    }
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  if (document.getElementById("events-grid") && !document.body.dataset.adminPage) {
+    loadEvents();
+    initEventRegisterModal();
+  }
+});
