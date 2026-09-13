@@ -7,6 +7,7 @@ const noticeSchema = new mongoose.Schema(
     category: { type: String, default: "General" }, // e.g. Academic, Exam, Event, General
     priority: { type: String, enum: ["Low", "Medium", "High"], default: "Medium" },
     pinned: { type: Boolean, default: false },
+        attachmentUrl: { type: String, default: "" },
   },
   { timestamps: true }
 );

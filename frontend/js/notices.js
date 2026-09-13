@@ -22,7 +22,7 @@ function renderNoticesGrid(list) {
   }
 
   grid.innerHTML = list.map((n) => `
-    <div class="card" style="padding:20px;">
+        <div class="card js-notice-card" data-id="${n._id}" style="padding:20px; cursor:pointer;">
       <div class="flex-between mb-8">
         <span class="badge badge-progress">${escapeHtml(n.category)}</span>
         ${n.pinned ? '<i class="fa-solid fa-thumbtack" style="color:var(--warning);" title="Pinned"></i>' : ""}

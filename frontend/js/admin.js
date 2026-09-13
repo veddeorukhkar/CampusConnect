@@ -367,6 +367,7 @@ function openNoticeModal(id = null) {
     document.getElementById("notice-category-input").value = notice.category;
     document.getElementById("notice-priority-input").value = notice.priority;
     document.getElementById("notice-pinned-input").checked = notice.pinned;
+        document.getElementById("notice-attachment-input").value = notice.attachmentUrl || "";
     modal.dataset.editId = id;
   } else {
     document.getElementById("notice-modal-title").textContent = "Create Notice";

@@ -39,7 +39,13 @@
       <div class="topbar-actions"><button class="icon-btn" onclick="toggleTheme()"><i id="theme-icon" class="fa-solid fa-moon"></i></button></div>
     </div>
 
-    <div class="page-body">
+       <div class="page-body">
+      <div id="registered-events-wrap" class="hidden mb-24">
+        <div class="section-header"><h2>My Registered Events</h2></div>
+        <div id="registered-events-grid" style="display:grid; grid-template-columns:repeat(3,1fr); gap:18px;"></div>
+      </div>
+
+      <div class="section-header"><h2>All Events</h2></div>
       <div id="events-grid" style="display:grid; grid-template-columns:repeat(3,1fr); gap:18px;"><div class="spinner"></div></div>
     </div>
   </main>

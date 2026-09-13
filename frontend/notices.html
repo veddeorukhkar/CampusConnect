@@ -52,6 +52,21 @@
   </main>
 </div>
 
+<div class="modal-overlay" id="notice-view-modal">
+  <div class="modal-box" style="max-width:480px;">
+    <div class="modal-header">
+      <h3 id="view-notice-title">Notice</h3>
+      <span class="modal-close" id="close-notice-view-modal"><i class="fa-solid fa-xmark"></i></span>
+    </div>
+    <p class="text-secondary mb-16" id="view-notice-description"></p>
+    <div id="view-notice-attachment-wrap" class="hidden">
+      <a href="#" id="view-notice-attachment-link" target="_blank" class="btn btn-primary btn-block">
+        <i class="fa-solid fa-file-arrow-down"></i> Open Attachment
+      </a>
+    </div>
+  </div>
+</div>
+
 <script src="js/api.js"></script>
 <script src="js/utils.js"></script>
 <script src="js/auth.js"></script>

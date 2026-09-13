@@ -1,10 +1,15 @@
 // events.js — handles the student events page
 
+// events.js — handles the student events page
+
+let allEventsList = [];
+
 async function loadEvents() {
   const grid = document.getElementById("events-grid");
   try {
-    const events = await api.get("/events");
-    renderEventsGrid(events);
+    allEventsList = await api.get("/events");
+    renderEventsGrid(allEventsList);
+    renderRegisteredEvents();
   } catch (error) {
     if (grid) grid.innerHTML = `<div class="state-box" style="grid-column:1/-1;"><i class="fa-solid fa-triangle-exclamation"></i><h4>Could not load events</h4><p>${error.message}</p></div>`;
   }
@@ -39,13 +44,14 @@ function renderEventsGrid(list) {
         <p class="text-secondary" style="font-size:13.5px; margin-bottom:12px;">${escapeHtml(e.description.slice(0, 80))}${e.description.length > 80 ? "..." : ""}</p>
         <div class="text-muted" style="font-size:12.5px; margin-bottom:4px;"><i class="fa-regular fa-calendar"></i> ${e.date} · ${e.time}</div>
         <div class="text-muted" style="font-size:12.5px; margin-bottom:14px;"><i class="fa-solid fa-location-dot"></i> ${escapeHtml(e.location)}</div>
-        <button class="btn btn-primary btn-sm btn-block js-register-btn" data-title="${escapeHtml(e.title)}">Register</button>
+               <button class="btn btn-primary btn-sm btn-block js-register-btn" data-title="${escapeHtml(e.title)}" data-id="${e._id}">Register</button>
       </div>
     </div>`).join("");
 
-  document.querySelectorAll(".js-register-btn").forEach((btn) => {
+    document.querySelectorAll(".js-register-btn").forEach((btn) => {
     btn.addEventListener("click", () => {
       document.getElementById("register-event-title").textContent = btn.dataset.title;
+      document.getElementById("register-event-modal").dataset.eventId = btn.dataset.id;
       document.getElementById("register-event-modal").classList.add("active");
     });
   });
@@ -56,9 +62,16 @@ function initEventRegisterModal() {
   if (!modal) return;
   document.getElementById("close-register-modal").addEventListener("click", () => modal.classList.remove("active"));
   document.getElementById("cancel-register-event").addEventListener("click", () => modal.classList.remove("active"));
-  document.getElementById("confirm-register-event").addEventListener("click", () => {
+    document.getElementById("confirm-register-event").addEventListener("click", () => {
+    const eventId = modal.dataset.eventId;
+    const registeredIds = getRegisteredEventIds();
+    if (!registeredIds.includes(eventId)) {
+      registeredIds.push(eventId);
+      localStorage.setItem("cc_registered_events", JSON.stringify(registeredIds));
+    }
     modal.classList.remove("active");
     showToast("You're registered for this event! 🎉", "success");
+    renderRegisteredEvents();
   });
 }
 
@@ -68,3 +81,34 @@ document.addEventListener("DOMContentLoaded", () => {
     initEventRegisterModal();
   }
 });
+
+function getRegisteredEventIds() {
+  const raw = localStorage.getItem("cc_registered_events");
+  return raw ? JSON.parse(raw) : [];
+}
+
+function renderRegisteredEvents() {
+  const wrap = document.getElementById("registered-events-wrap");
+  const grid = document.getElementById("registered-events-grid");
+  if (!wrap || !grid) return;
+
+  const registeredIds = getRegisteredEventIds();
+  const registeredEvents = allEventsList.filter((e) => registeredIds.includes(e._id));
+
+  if (registeredEvents.length === 0) {
+    wrap.classList.add("hidden");
+    return;
+  }
+
+  wrap.classList.remove("hidden");
+  grid.innerHTML = registeredEvents.map((e) => `
+    <div class="card" style="overflow:hidden; border-color:var(--success);">
+      <div style="height:70px; background:${eventCategoryColors[e.category] || eventCategoryColors.Technical}; display:flex; align-items:center; justify-content:center;">
+        <i class="fa-solid fa-circle-check" style="color:#fff; font-size:24px;"></i>
+      </div>
+      <div style="padding:16px;">
+        <h3 style="font-size:15px; margin-bottom:6px;">${escapeHtml(e.title)}</h3>
+        <div class="text-muted" style="font-size:12.5px;"><i class="fa-regular fa-calendar"></i> ${e.date} · ${e.time}</div>
+      </div>
+    </div>`).join("");
+}

@@ -92,6 +92,7 @@
 }
 @media (max-width: 720px) {
   .nav-links { display: none; }
+    .nav-actions { display: none; }
   .hamburger { display: block; }
   .hero h1 { font-size: 32px; }
   .stats-strip .container { grid-template-columns: repeat(2,1fr); gap: 26px; }
