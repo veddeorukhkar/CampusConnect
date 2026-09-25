@@ -57,7 +57,7 @@
         </div>
         <div class="table-wrap">
           <table class="data-table">
-            <thead><tr><th>Subject</th><th>Category</th><th>Priority</th><th>Status</th><th>Date</th></tr></thead>
+          <thead><tr><th>Subject</th><th>Category</th><th>Priority</th><th>Status</th><th>Proof</th><th>Date</th></tr></thead>
             <tbody id="complaints-tbody"><tr><td colspan="5"><div class="spinner"></div></td></tr></tbody>
           </table>
         </div>
@@ -96,10 +96,11 @@
             <option>Low</option><option selected>Medium</option><option>High</option>
           </select>
         </div>
-        <div>
-          <label class="form-label">Location (optional)</label>
-          <input type="text" class="form-control" id="complaint-location" placeholder="e.g. Block A">
-        </div>
+              <div class="form-group">
+        <label class="form-label">Proof Photo (optional)</label>
+        <input type="file" class="form-control" id="complaint-photo" accept="image/*">
+        <div class="form-hint">Attach a photo as evidence (max ~3MB).</div>
+        <img id="complaint-photo-preview" class="hidden" style="max-width:100%; border-radius:8px; margin-top:10px;">
       </div>
       <div class="modal-actions">
         <button type="button" class="btn btn-secondary" id="cancel-complaint">Cancel</button>

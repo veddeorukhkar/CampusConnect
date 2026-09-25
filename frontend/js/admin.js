@@ -166,8 +166,21 @@ function openComplaintManageModal(id) {
   document.getElementById("manage-title").textContent = complaint.subject;
   document.getElementById("manage-description").textContent = complaint.description;
   document.getElementById("manage-student").textContent = complaint.userId ? `${complaint.userId.name} (${complaint.userId.studentId})` : "Unknown";
-  document.getElementById("manage-status").value = complaint.status;
+   document.getElementById("manage-status").value = complaint.status;
   document.getElementById("manage-response").value = complaint.adminResponse || "";
+
+  const proofWrap = document.getElementById("proof-photo-view-wrap");
+  const proofImg = document.getElementById("manage-proof-photo");
+  if (complaint.proofPhoto) {
+    proofImg.src = complaint.proofPhoto;
+    proofWrap.classList.remove("hidden");
+  } else {
+    proofWrap.classList.add("hidden");
+  }
+  document.getElementById("manage-resolution-photo").value = "";
+  document.getElementById("manage-resolution-preview").classList.add("hidden");
+  window.selectedResolutionPhoto = "";
+
   modal.dataset.currentId = id;
   modal.dataset.type = "complaint";
   modal.classList.add("active");
@@ -237,16 +250,40 @@ function initManageModal() {
   if (!modal) return;
   document.getElementById("close-manage-modal").addEventListener("click", () => modal.classList.remove("active"));
   document.getElementById("cancel-manage").addEventListener("click", () => modal.classList.remove("active"));
+    const resPhotoInput = document.getElementById("manage-resolution-photo");
+  if (resPhotoInput) {
+    resPhotoInput.addEventListener("change", () => {
+      const file = resPhotoInput.files[0];
+      if (!file) return;
+      if (file.size > 3 * 1024 * 1024) {
+        showToast("Photo is too large. Please choose one under 3MB.", "error");
+        resPhotoInput.value = "";
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = () => {
+        window.selectedResolutionPhoto = reader.result;
+        const preview = document.getElementById("manage-resolution-preview");
+        preview.src = reader.result;
+        preview.classList.remove("hidden");
+      };
+      reader.readAsDataURL(file);
+    });
+  }
 
-  document.getElementById("save-manage").addEventListener("click", async () => {
+    document.getElementById("save-manage").addEventListener("click", async () => {
     const id = modal.dataset.currentId;
     const type = modal.dataset.type;
     const status = document.getElementById("manage-status").value;
     const adminResponse = document.getElementById("manage-response").value.trim();
     const endpoint = type === "complaint" ? `/complaints/${id}` : `/requests/${id}`;
+    const payload = { status, adminResponse };
+    if (type === "complaint" && window.selectedResolutionPhoto) {
+      payload.resolutionPhoto = window.selectedResolutionPhoto;
+    }
 
     try {
-      await api.put(endpoint, { status, adminResponse });
+      await api.put(endpoint, payload);
       showToast("Updated successfully!", "success");
       modal.classList.remove("active");
       if (type === "complaint") loadAdminComplaints(); else loadAdminRequests();

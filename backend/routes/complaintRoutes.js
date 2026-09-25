@@ -24,7 +24,7 @@ router.get("/", protect, async (req, res) => {
 // @desc    Submit a new complaint
 router.post("/", protect, async (req, res) => {
   try {
-    const { category, subject, description, priority, location } = req.body;
+        const { category, subject, description, priority, location, proofPhoto } = req.body;
 
     if (!category || !subject || !description) {
       return res.status(400).json({ message: "Please fill in all required fields." });
@@ -37,6 +37,7 @@ router.post("/", protect, async (req, res) => {
       description,
       priority: priority || "Medium",
       location: location || "",
+      proofPhoto: proofPhoto || "",
     });
 
     await Activity.create({
@@ -72,10 +73,12 @@ router.get("/:id", protect, async (req, res) => {
 // @desc    Admin updates status/response of a complaint
 router.put("/:id", protect, adminOnly, async (req, res) => {
   try {
-    const { status, adminResponse } = req.body;
+    const { status, adminResponse, resolutionPhoto } = req.body;
+    const updateData = { status, adminResponse };
+    if (resolutionPhoto) updateData.resolutionPhoto = resolutionPhoto;
     const complaint = await Complaint.findByIdAndUpdate(
       req.params.id,
-      { status, adminResponse },
+      updateData,
       { new: true }
     );
     if (!complaint) return res.status(404).json({ message: "Complaint not found." });

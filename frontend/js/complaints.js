@@ -2,6 +2,31 @@
 
 let allComplaints = [];
 
+let selectedProofPhoto = "";
+
+function initPhotoUpload(inputId, previewId) {
+  const input = document.getElementById(inputId);
+  const preview = document.getElementById(previewId);
+  if (!input) return null;
+
+  input.addEventListener("change", () => {
+    const file = input.files[0];
+    if (!file) return;
+    if (file.size > 3 * 1024 * 1024) {
+      showToast("Photo is too large. Please choose one under 3MB.", "error");
+      input.value = "";
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = () => {
+      selectedProofPhoto = reader.result;
+      preview.src = reader.result;
+      preview.classList.remove("hidden");
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
 async function loadComplaints() {
   const tbody = document.getElementById("complaints-tbody");
   try {
@@ -21,12 +46,13 @@ function renderComplaintsTable(list) {
     return;
   }
 
-  tbody.innerHTML = list.map((c) => `
+    tbody.innerHTML = list.map((c) => `
     <tr>
       <td data-label="Subject"><strong>${escapeHtml(c.subject)}</strong><br><span class="text-muted" style="font-size:12px;">${escapeHtml(c.description.slice(0, 50))}${c.description.length > 50 ? "..." : ""}</span></td>
       <td data-label="Category">${escapeHtml(c.category)}</td>
       <td data-label="Priority"><span class="badge ${priorityBadgeClass(c.priority)}">${c.priority}</span></td>
       <td data-label="Status"><span class="badge ${statusBadgeClass(c.status)}">${c.status}</span></td>
+      <td data-label="Proof">${c.resolutionPhoto ? `<a href="${c.resolutionPhoto}" target="_blank" class="text-muted"><i class="fa-solid fa-image"></i> View</a>` : "—"}</td>
       <td data-label="Date">${formatDate(c.createdAt)}</td>
     </tr>`).join("");
 }
@@ -62,12 +88,13 @@ function initComplaintModal() {
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     const submitBtn = form.querySelector("button[type=submit]");
-    const payload = {
+        const payload = {
       category: document.getElementById("complaint-category").value,
       subject: document.getElementById("complaint-subject").value.trim(),
       description: document.getElementById("complaint-description").value.trim(),
       priority: document.getElementById("complaint-priority").value,
       location: document.getElementById("complaint-location").value.trim(),
+      proofPhoto: selectedProofPhoto,
     };
 
     submitBtn.disabled = true;
@@ -75,9 +102,11 @@ function initComplaintModal() {
 
     try {
       await api.post("/complaints", payload);
-      showToast("Complaint submitted successfully!", "success");
+            showToast("Complaint submitted successfully!", "success");
       modal.classList.remove("active");
       form.reset();
+      selectedProofPhoto = "";
+      document.getElementById("complaint-photo-preview").classList.add("hidden");
       loadComplaints();
     } catch (error) {
       showToast(error.message, "error");
@@ -92,6 +121,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (document.getElementById("complaints-tbody") && !document.body.dataset.adminPage) {
     loadComplaints();
     initComplaintModal();
+    initPhotoUpload("complaint-photo", "complaint-photo-preview");
     document.getElementById("search-input")?.addEventListener("input", applyComplaintFilters);
     document.getElementById("status-filter")?.addEventListener("change", applyComplaintFilters);
     document.getElementById("category-filter")?.addEventListener("change", applyComplaintFilters);

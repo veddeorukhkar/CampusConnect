@@ -21,7 +21,7 @@ connectDB();
 
 // Middleware
 app.use(cors());
-app.use(express.json()); // allows the server to understand JSON request bodies
+app.use(express.json({ limit: "8mb" }));// allows the server to understand JSON request bodies
 
 // API Routes
 app.use("/api/auth", authRoutes);
