@@ -67,11 +67,17 @@
     <div class="modal-header"><h3 id="manage-title">Item</h3><span class="modal-close" id="close-manage-modal"><i class="fa-solid fa-xmark"></i></span></div>
     <p class="text-muted" style="font-size:13px;" id="manage-student"></p>
     <p class="text-secondary mb-16" id="manage-description"></p>
-    <div class="form-group">
+           <div class="form-group">
       <label class="form-label">Update Status</label>
       <select class="form-control" id="manage-status"><option>Pending</option><option>In Progress</option><option>Resolved</option><option>Rejected</option></select>
     </div>
-        <div class="form-group" id="proof-photo-view-wrap" class="hidden">
+
+    <div class="form-group">
+      <label class="form-label">Admin Response</label>
+      <textarea class="form-control" id="manage-response" placeholder="Write a response to the student..."></textarea>
+    </div>
+
+      <div class="form-group hidden" id="proof-photo-view-wrap">
       <label class="form-label">Student's Proof Photo</label>
       <img id="manage-proof-photo" style="max-width:100%; border-radius:8px;">
     </div>

@@ -167,7 +167,8 @@ function openComplaintManageModal(id) {
   document.getElementById("manage-description").textContent = complaint.description;
   document.getElementById("manage-student").textContent = complaint.userId ? `${complaint.userId.name} (${complaint.userId.studentId})` : "Unknown";
    document.getElementById("manage-status").value = complaint.status;
-  document.getElementById("manage-response").value = complaint.adminResponse || "";
+  const responseBox = document.getElementById("manage-response");
+if (responseBox) responseBox.value = complaint.adminResponse || "";
 
   const proofWrap = document.getElementById("proof-photo-view-wrap");
   const proofImg = document.getElementById("manage-proof-photo");
