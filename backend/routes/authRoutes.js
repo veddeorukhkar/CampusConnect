@@ -20,11 +20,13 @@ const generateToken = (user) => {
 // @desc    Create a new student account
 router.post("/register", async (req, res) => {
   try {
-    const { name, studentId, email, department, year, password, confirmPassword } = req.body;
+    const { name, studentId, email, department, year, password, confirmPassword, profileImage } = req.body;
 
     if (!name || !studentId || !email || !department || !year || !password) {
       return res.status(400).json({ message: "Please fill in all fields." });
     }
+
+     if (!profileImage) { return res.status(400).json({ message: "Profile photo is required." }); }
 
     if (confirmPassword !== undefined && password !== confirmPassword) {
       return res.status(400).json({ message: "Passwords do not match." });
@@ -46,6 +48,7 @@ router.post("/register", async (req, res) => {
       department,
       year,
       password: hashedPassword,
+      profileImage,
       role: "student",
     });
 
@@ -67,6 +70,7 @@ router.post("/register", async (req, res) => {
         studentId: newUser.studentId,
         department: newUser.department,
         year: newUser.year,
+        hasPhoto: !!newUser.profileImage,
         role: newUser.role,
       },
     });
@@ -118,7 +122,9 @@ router.post("/login", async (req, res) => {
         studentId: user.studentId,
         department: user.department,
         year: user.year,
+        hasPhoto: !!user.profileImage,
         role: user.role,
+        hasPhoto: true,
       },
     });
   } catch (error) {

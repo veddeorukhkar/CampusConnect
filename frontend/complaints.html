@@ -58,7 +58,7 @@
         <div class="table-wrap">
           <table class="data-table">
           <thead><tr><th>Subject</th><th>Category</th><th>Priority</th><th>Status</th><th>Proof</th><th>Date</th></tr></thead>
-            <tbody id="complaints-tbody"><tr><td colspan="5"><div class="spinner"></div></td></tr></tbody>
+            <tbody id="complaints-tbody"><tr><td colspan="6"><div class="spinner"></div></td></tr></tbody>
           </table>
         </div>
       </div>
@@ -89,13 +89,11 @@
         <label class="form-label">Description</label>
         <textarea class="form-control" id="complaint-description" placeholder="Describe the issue in detail..." required></textarea>
       </div>
-      <div class="form-group" style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
-        <div>
-          <label class="form-label">Priority</label>
-          <select class="form-control" id="complaint-priority">
-            <option>Low</option><option selected>Medium</option><option>High</option>
-          </select>
-        </div>
+      <div class="form-group">
+        <label class="form-label">Location (optional)</label>
+        <input type="text" class="form-control" id="complaint-location" placeholder="e.g. Block A">
+      </div>
+      <div class="form-hint mb-16">Priority will be assessed and set by the admin after review.</div>
               <div class="form-group">
         <label class="form-label">Proof Photo (optional)</label>
         <input type="file" class="form-control" id="complaint-photo" accept="image/*">

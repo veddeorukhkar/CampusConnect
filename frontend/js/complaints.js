@@ -92,7 +92,6 @@ function initComplaintModal() {
       category: document.getElementById("complaint-category").value,
       subject: document.getElementById("complaint-subject").value.trim(),
       description: document.getElementById("complaint-description").value.trim(),
-      priority: document.getElementById("complaint-priority").value,
       location: document.getElementById("complaint-location").value.trim(),
       proofPhoto: selectedProofPhoto,
     };
